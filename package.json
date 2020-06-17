@@ -1,0 +1,32 @@
+{
+  "name": "contacts-api",
+  "version": "1.0.0",
+  "description": "Contacts Management API developed with Node.js &amp; TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon src/index.ts --exec ts-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamiryu-sama/contacts-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kamiryu-sama/contacts-api/issues"
+  },
+  "homepage": "https://github.com/kamiryu-sama/contacts-api#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/morgan": "^1.9.1",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
