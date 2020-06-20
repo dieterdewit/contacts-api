@@ -38,7 +38,8 @@ export async function login(req: Request, res: Response) {
         const username = req.body.username;
         const password = req.body.password;
 
-        token = jwt.sign({ _id: username}, process.env.TOKEN_SECRET_CONTACTS  || 'OnErrorNonSecret', {
+        const user_id = await conn.query('SELECT user_id FROM users WHERE username = ?', [username]);
+        token = jwt.sign({ _id: user_id}, process.env.TOKEN_SECRET_CONTACTS  || 'OnErrorNonSecret', {
             expiresIn: 60 * 60
         });
 

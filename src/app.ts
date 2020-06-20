@@ -4,7 +4,7 @@ import cors from "cors";
 import ContactsRoutes from "./routes/contacts.route";
 import AuthRoutes from "./routes/auth.route";
 import bodyParser from "body-parser";
-import { TokenValidation } from "./lib/verifyToken";
+import { TokenValidation, UserValidation } from "./lib/verifyToken";
 
 export class App {
     private app: Application;
@@ -29,7 +29,7 @@ export class App {
     }
 
     routes() {
-        this.app.use('/api/contacts', TokenValidation, ContactsRoutes);
+        this.app.use('/api/contacts', TokenValidation, UserValidation, ContactsRoutes);
         this.app.use('/api/auth', AuthRoutes);
     }
 
