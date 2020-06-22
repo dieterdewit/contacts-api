@@ -37,12 +37,12 @@ npm run dev
 
 ## Routes
 
-POST http://localhost:3100/api/auth/register
-POST http://localhost:3100/api/auth/login
+POST http://localhost:3100/api/auth/register <br/>
+POST http://localhost:3100/api/auth/login <br/>
 
-GET http://localhost:3100/api/contacts/:userId
-POST http://localhost:3100/api/contacts/:userId
-UPDATE http://localhost:3100/api/contacts/:contactId
+GET http://localhost:3100/api/contacts/:userId <br/>
+POST http://localhost:3100/api/contacts/:userId <br/>
+UPDATE http://localhost:3100/api/contacts/:contactId <br/>
 DELETE http://localhost:3100/api/contacts/:contactId
 
 
