@@ -46,12 +46,15 @@ export async function login(req: Request, res: Response) {
 
     let epass = false;
     let token: string;
+    let json_user;
 
     try {
         const username = req.body.username;
         const password = req.body.password;
 
         const user_id = await conn.query('SELECT user_id FROM users WHERE username = ?', [username]);
+        const string_user = JSON.stringify(user_id[0]);
+        json_user = JSON.parse(string_user);
         token = jwt.sign({ _id: user_id}, process.env.TOKEN_SECRET_CONTACTS  || 'OnErrorNonSecret', {
             expiresIn: 60 * 60
         });
@@ -73,7 +76,8 @@ export async function login(req: Request, res: Response) {
         return res.header('token', token).json({
             message: "User Authenticated",
             status: 200,
-            token: token
+            token: token,
+            userId: json_user[0].user_id
         })
     } else {
         return res.json({
