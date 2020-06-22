@@ -10,6 +10,19 @@ export async function register(req: Request, res: Response) {
         const username = req.body.username;
         const password = req.body.password;
 
+        if (username == ''){
+            return res.json({
+                message: "Incomplete or Duplicated Fields",
+                status: 400
+            })
+        }
+        else if (password == ''){
+            return res.json({
+                message: "Incomplete or Duplicated Fields",
+                status: 400
+            })
+        }
+
         const salt = await bcrypt.genSalt(10);
         const epass = await bcrypt.hash(password, salt);
 
@@ -58,7 +71,9 @@ export async function login(req: Request, res: Response) {
 
     if (epass){
         return res.header('token', token).json({
-            message: "User Authenticated"
+            message: "User Authenticated",
+            status: 200,
+            token: token
         })
     } else {
         return res.json({
