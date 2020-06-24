@@ -12,9 +12,11 @@ aws.config.update({
 const S3_BUCKET = process.env.BUCKET_NAME_CONTACTS
 
 export async function sign_s3 (req: Request, res: Response) {
+    const conn = await connect();
     const s3 = new aws.S3();
     const fileName = req.body.fileName;
     const fileType = req.body.fileType;
+    const contactId = req.body.contactId;
 
     // Set up the payload of what we are sending to the S3 api
     const s3Params = {
@@ -25,6 +27,12 @@ export async function sign_s3 (req: Request, res: Response) {
         ACL: 'public-read'
     };
 
+    const image_uri = `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+
+    console.log(image_uri)
+
+    await conn.query('UPDATE contacts SET image_uri = ? WHERE contact_id = ?', [image_uri.toString(), contactId]);
+
     // Make a request to the S3 API to get a signed URL which we can use to upload our file
     s3.getSignedUrl('putObject', s3Params, (err: any, data: any) => {
         if(err){
@@ -34,7 +42,7 @@ export async function sign_s3 (req: Request, res: Response) {
         // Data payload of what we are sending back, the url of the signedRequest and a URL where we can access the content after its saved.
         const returnData = {
             signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+            url: image_uri
         };
         res.json({success:true, data:{returnData}});
     });
