@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import ContactsRoutes from "./routes/contacts.route";
 import AuthRoutes from "./routes/auth.route";
+import ImageRoutes from "./routes/image.route";
 import bodyParser from "body-parser";
 import { TokenValidation, UserValidation } from "./lib/verifyToken";
 
@@ -30,6 +31,7 @@ export class App {
 
     routes() {
         this.app.use('/api/contacts', TokenValidation, UserValidation, ContactsRoutes);
+        this.app.use('/api/images', ImageRoutes);
         this.app.use('/api/auth', AuthRoutes);
     }
 

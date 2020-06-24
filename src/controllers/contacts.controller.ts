@@ -12,6 +12,7 @@ export async function getContacts(req: Request, res: Response): Promise<Response
 
 export async function addContact(req: Request, res: Response) {
     const conn = await connect();
+    
 
     try {
         const id = req.params.id;
@@ -20,15 +21,20 @@ export async function addContact(req: Request, res: Response) {
 
         await conn.query('INSERT INTO contacts (user_id, full_name, email) VALUES (?,?,?)', [id, name, email]);
 
+        const contactId = await conn.query('SELECT contact_id FROM contacts WHERE user_id = ? AND full_name = ? AND email = email', [id, name, email]);
+        const string_id = JSON.stringify(contactId[0]);
+        const json_id = JSON.parse(string_id);
+
         return res.json({
             message: "Contact Created",
-            status: 200
+            status: 200,
+            contactId: json_id[0].contact_id
         })
     }
     catch (e) {
         return res.json({
             message: "Error",
-            status: 200
+            status: 400
         })
     }
 }
@@ -37,6 +43,7 @@ export async function deleteContact(req: Request, res: Response) {
     const conn = await connect();
 
     const id = req.params.id;
+
     await conn.query('DELETE FROM contacts WHERE contact_id = ?', [id])
 
     return res.json({

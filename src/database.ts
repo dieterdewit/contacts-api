@@ -8,6 +8,6 @@ export async function connect() {
         user: process.env.DB_USER_CONTACTS,
         password: process.env.DB_PASSWORD_CONTACTS,
         database: 'contacts_management',
-        connectionLimit: 50
+        connectionLimit: 10
     });
 }
