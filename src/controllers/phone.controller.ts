@@ -23,3 +23,12 @@ export async function addPhone(req: Request, res: Response) {
         })
     }
 }
+
+export async function getPhones(req: Request, res: Response): Promise<Response> {
+    const conn = await connect();
+
+    const id = req.params.id;
+    const phones = await conn.query('SELECT * FROM phones WHERE contact_id = ?', [id]);
+
+    return res.json(phones[0]);
+}

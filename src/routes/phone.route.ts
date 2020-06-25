@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import {addPhone} from "../controllers/phone.controller";
+import {addPhone, getPhones} from "../controllers/phone.controller";
 
 const router = Router();
 
 router.route('/:id')
     .post(addPhone)
+    .get(getPhones)
 
 export default router;

@@ -43,6 +43,7 @@ export async function register(req: Request, res: Response) {
 
 export async function login(req: Request, res: Response) {
     const conn = await connect();
+    const conn2 = await connect();
 
     let epass = false;
     let token: string;
@@ -59,7 +60,7 @@ export async function login(req: Request, res: Response) {
             expiresIn: 60 * 60
         });
 
-        const db_pass = await conn.query('SELECT password FROM users WHERE username = ?', [username]);
+        const db_pass = await conn2.query('SELECT password FROM users WHERE username = ?', [username]);
         const string_pass = JSON.stringify(db_pass[0]);
         const json_pass = JSON.parse(string_pass);
 
